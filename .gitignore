@@ -3,13 +3,6 @@
 *.swp
 *.bak
 
-# Archivos de datos generados
-*.csv
-*.xls
-*.xlsx
-*.sqlite
-*.db
-
 # Archivos de caché
 __pycache__/
 .cache/
