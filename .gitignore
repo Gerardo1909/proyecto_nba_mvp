@@ -1,0 +1,32 @@
+# Archivos de respaldo y archivos temporales
+*~
+*.swp
+*.bak
+
+# Archivos de datos generados
+*.csv
+*.xls
+*.xlsx
+*.sqlite
+*.db
+
+# Archivos de caché
+__pycache__/
+.cache/
+
+# Logs y archivos de registro
+*.log
+
+# Directorios y archivos de entornos virtuales
+venv/
+env/
+.venv/
+.virtualenv/
+
+# Directorios y archivos de dependencias
+/.idea
+/.vscode
+/.vs
+
+# Archivos de configuración local
+*.env
