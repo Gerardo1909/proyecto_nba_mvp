@@ -152,6 +152,30 @@ def generar_df_mvp(df:pd.DataFrame, columna_nombre:str, columna_votos:str, colum
     return resultado_final
     
     
+def seleccionar_cols_corr(df: pd.DataFrame, var_objetivo: str, umbral: float, columnas_ignorar: list) -> pd.DataFrame:
+    """
+    Función para seleccionar las columnas de un DataFrame con una correlación más fuerte con una variable objetivo determinada.
 
+    Parameters:
+    df (pd.DataFrame): DataFrame que contiene las columnas a analizar.
+    var_objetivo (str): Nombre de la variable objetivo para calcular la correlación.
+    umbral (float): Criterio de selección de columnas, que indica la correlación mínima permitida.
+    columnas_ignorar (list): Lista de nombres de columnas que se deben excluir de la selección.
+
+    Returns:
+    pd.DataFrame: DataFrame con las columnas seleccionadas.
+    """
+    # Calcula la matriz de correlación
+    correlation_matrix = df.corr(numeric_only=True)
+
+    # Selecciona las columnas con correlación mayor a umbral
+    target_correlation = correlation_matrix[var_objetivo].abs() > umbral
+    selected_columns = correlation_matrix[target_correlation].index.astype(str).tolist()
+
+    # Añade las columnas ignoradas a la lista de columnas seleccionadas
+    selected_columns = columnas_ignorar + selected_columns
+
+    # Selecciona las columnas deseadas del DataFrame
+    return df[selected_columns]
 
 
