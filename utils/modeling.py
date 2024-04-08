@@ -8,18 +8,29 @@ import warnings
 from sklearn.ensemble import RandomForestRegressor
 warnings.filterwarnings("ignore")
 
-def calcular_importancia(set_entrenamiento:pd.DataFrame, modelo:RandomForestRegressor) -> pd.DataFrame:
-    
-    #Saco las features más importantes
+def calcular_importancia(set_entrenamiento: pd.DataFrame, modelo: RandomForestRegressor) -> pd.DataFrame:
+    """
+    Calcula la importancia de cada feature en un modelo de Random Forest Regressor.
+
+    Parameters:
+    set_entrenamiento (pd.DataFrame): DataFrame que contiene el conjunto de entrenamiento.
+    modelo (RandomForestRegressor): Modelo de Random Forest Regressor que se utilizó para entrenar.
+
+    Returns:
+    pd.DataFrame: DataFrame que contiene la importancia de cada feature en el modelo.
+    """
+    # Saco las features más importantes
     importancias_features = modelo.feature_importances_
 
-    #Obtengo el nombre de las features
+    # Obtengo el nombre de las features
     nombres_features = set_entrenamiento.columns
 
-    #Me armo un dataframe
-    importancias_df = pd.DataFrame({'Feature': nombres_features, 'Importancia': importancias_features})
+    # Me armo un dataframe
+    importancias_df = pd.DataFrame(
+        {'Feature': nombres_features, 'Importancia': importancias_features}
+    )
 
-    #Ordeno el dataframe por orden de importancia
+    # Ordeno el dataframe por orden de importancia
     return importancias_df.sort_values('Importancia', ascending=False)
 
 
