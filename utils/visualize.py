@@ -54,4 +54,11 @@ def graficar_relaciones(df:pd.DataFrame, tamanio:tuple, columna_objetivo:str, co
     # Ajusta el diseño
     plt.tight_layout()
     
+
+def plotear_predvsreal(y_pred, y_real, tamanio:tuple):
     
+    plt.figure(figsize= tamanio)
+    sns.regplot(x= y_pred, y= y_real)
+    plt.xlabel('Valores Reales')
+    plt.ylabel('Predicciones')
+    plt.title('Comparación: Valores Reales vs Predicciones del modelo', fontsize=14)
