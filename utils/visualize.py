@@ -18,10 +18,10 @@ def mirar_distribuciones_num(df:pd.DataFrame, tamanio:tuple, bins:int,  columnas
     Returns:
     None
     """
-    #Saco las columnas a ignorar
+    # Saco las columnas a ignorar
     df_numericas_interes = df.select_dtypes(include=['int64', 'float64']).drop(columns=columnas_ignorar)
 
-    # Ahora puedes trazar los histogramas para las columnas numéricas restantes
+    # Ahora grafico los histogramas para las columnas numéricas restantes
     df_numericas_interes.hist(bins=bins, figsize=tamanio, edgecolor='black')
     plt.tight_layout()
     
@@ -40,25 +40,48 @@ def graficar_relaciones(df:pd.DataFrame, tamanio:tuple, columna_objetivo:str, co
     None
     """
     
-    # Selecciona solo las columnas numéricas de interés
+    # Selecciono solo las columnas numéricas de interés
     df_numericas_interes = df.select_dtypes(include=['int64', 'float64']).drop(columns=columnas_ignorar)
 
-    # Crea la figura y los ejes
+    # Creo la figura y los ejes
     fig, axes = plt.subplots(nrows=len(df_numericas_interes.columns), figsize=tamanio)
 
-    # Itera sobre las columnas numéricas de interés
+    # Itero sobre las columnas numéricas de interés
     for i, col in enumerate(df_numericas_interes.columns):
-        # Trama de dispersión para cada columna numérica con 'columna_objetivo' en el eje y
+        # Grafico de dispersión para cada columna numérica con 'columna_objetivo' en el eje y
         sns.scatterplot(x=col, y=columna_objetivo, data=df_numericas_interes, ax=axes[i])
 
-    # Ajusta el diseño
+    # Ajusto el diseño
     plt.tight_layout()
     
 
 def plotear_predvsreal(y_pred, y_real, tamanio:tuple):
+    """
+    Visualiza la comparación entre los valores predichos y reales de un modelo mediante un gráfico de dispersión con una regresión lineal.
+
+    Parameters:
+    y_pred : Los valores predichos por el modelo.
+        
+    y_real : Los valores reales.
+        
+    tamanio (tuple): Una tupla que especifica las dimensiones del gráfico (ancho, altura).
+        
+    Returns:
+    None
+    """
     
+    # Creo una nueva figura con el tamaño especificado
     plt.figure(figsize= tamanio)
+    
+    # Genero el gráfico de dispersión junto con la recta identidad
     sns.regplot(x= y_pred, y= y_real)
+    
+    # Añado etiqueta a los ejes
     plt.xlabel('Valores Reales')
     plt.ylabel('Predicciones')
+
+    # Coloco el título
     plt.title('Comparación: Valores Reales vs Predicciones del modelo', fontsize=14)
+    
+    # Ajusto el diseño
+    plt.tight_layout()

@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import warnings
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, explained_variance_score, r2_score
 warnings.filterwarnings("ignore")
 
 def calcular_importancia(set_entrenamiento: pd.DataFrame, modelo: RandomForestRegressor) -> pd.DataFrame:
@@ -57,3 +58,29 @@ def mostrar_podio_MVP(df_base:pd.DataFrame,columna_temporadas:str, columna_nombr
     df_comp = df_comp.sort_values(by='y_pred', ascending=False)
 
     return df_comp[df_comp[columna_temporadas] == temporada].head(cant_jugadores)
+
+
+def metricas_reg(v_real, v_pred):
+    """
+    Calcula métricas de regresión basadas en los valores reales y predichos.
+
+    Parameters:
+    v_real (pd.DataFrame): DataFrame que contiene los valores reales.
+    v_pred (pd.DataFrame): DataFrame que contiene los valores predichos.
+
+    Returns:
+    pd.DataFrame: Un objeto DataFrame que contiene las métricas de regresión calculadas.
+    """
+    # Calculo las métricas de regresión
+    r2_test = r2_score(v_real, v_pred)  # Coeficiente de determinación
+    explained_variance_test = explained_variance_score(v_real, v_pred)  # Varianza explicada
+    mse_test = mean_squared_error(v_real, v_pred)  # Error Cuadrático Medio
+    rmse_test = np.sqrt(mse_test)  # Raíz del Error Cuadrático Medio
+
+    # Creo un DataFrame con las métricas calculadas
+    metrics_df = pd.DataFrame({
+        'Métrica': ['Coeficiente de determinación (R²)', 'Varianza explicada', 'MSE (Error Cuadrático Medio)', 'RMSE (Raíz del Error Cuadrático Medio)'],
+        'Valor': [r2_test, explained_variance_test, mse_test, rmse_test]
+    })
+    
+    return metrics_df
